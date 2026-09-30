@@ -228,7 +228,7 @@ h1, h2, h3 { font-family: var(--font-head); line-height: 1.2; margin: 0; }
 
 /* Pricing */
 .pricing { padding: 72px 0; background: var(--paper-soft); }
-.pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 36px; }
+.pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 36px; }
 .price-card {
   background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
   padding: 30px 26px; text-align: left; display: flex; flex-direction: column; gap: 16px;
@@ -312,3 +312,7 @@ h1, h2, h3 { font-family: var(--font-head); line-height: 1.2; margin: 0; }
   }
   .nav-toggle span { width: 22px; height: 2px; background: var(--ink); border-radius: 2px; }
 }
+
+/* Logo + how-it-works note */
+.brand-logo { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; display: block; }
+.how-note { margin: 24px 0 0; text-align: center; font-weight: 600; color: var(--muted); }
