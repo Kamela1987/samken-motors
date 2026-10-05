@@ -66,9 +66,9 @@ img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
 
 .container {
-  max-width: 1120px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 32px;
 }
 
 h1, h2, h3 { font-family: var(--font-head); line-height: 1.18; margin: 0; letter-spacing: -0.01em; }
@@ -347,6 +347,24 @@ h1, h2, h3 { font-family: var(--font-head); line-height: 1.18; margin: 0; letter
 .how-note { margin: 26px 0 0; text-align: center; font-weight: 700; color: var(--navy-800); }
 :root[data-theme="dark"] .how-note { color: var(--gold-400); }
 
+/* Clearing & Logistics Partners */
+.partners { padding: 76px 0; background: var(--paper); }
+.partner-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 36px; }
+.partner-card {
+  background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 26px; box-shadow: var(--shadow); display: flex; gap: 20px; align-items: flex-start;
+  transition: transform .2s ease;
+}
+.partner-card:hover { transform: translateY(-4px); }
+.partner-logo { width: 84px; height: 84px; border-radius: 50%; object-fit: cover; flex-shrink: 0; border: 2px solid var(--line); }
+.partner-logo-card { border-radius: 10px; width: 120px; height: 90px; }
+.partner-body h3 { font-size: 1.1rem; margin-bottom: 6px; }
+.partner-role { display: block; font-size: 0.82rem; font-weight: 700; color: var(--coral-500); margin-bottom: 8px; }
+.partner-body p { margin: 0 0 12px; color: var(--muted); font-size: 0.92rem; }
+.partner-contact { font-weight: 700; color: var(--navy-800); }
+:root[data-theme="dark"] .partner-contact { color: var(--gold-400); }
+.partner-contact:hover { text-decoration: underline; }
+
 /* About */
 .about { padding: 76px 0; }
 .about-inner { display: grid; grid-template-columns: 1.6fr 1fr; gap: 40px; align-items: center; }
@@ -401,7 +419,9 @@ h1, h2, h3 { font-family: var(--font-head); line-height: 1.18; margin: 0; letter
   .hero-art { order: -1; margin-bottom: 8px; }
 }
 @media (max-width: 640px) {
-  .service-grid, .steps-grid, .delivered-grid, .testimonial-grid { grid-template-columns: 1fr; }
+  .container { padding: 0 20px; }
+  .partner-card { flex-direction: column; align-items: center; text-align: center; }
+  .service-grid, .steps-grid, .delivered-grid, .testimonial-grid, .partner-grid { grid-template-columns: 1fr; }
   .nav { position: fixed; top: 62px; left: 0; right: 0; background: var(--paper);
     border-bottom: 1px solid var(--line); flex-direction: column; align-items: flex-start;
     padding: 18px 20px; gap: 16px; transform: translateY(calc(-100% - 80px)); transition: transform .2s ease; }
