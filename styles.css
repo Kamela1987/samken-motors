@@ -237,6 +237,18 @@ h1, h2, h3 { font-family: var(--font-head); line-height: 1.18; margin: 0; letter
 .service-card-cta h3 { color: #fff; }
 .service-card-cta p { color: rgba(255,255,255,0.82); margin-bottom: 18px; }
 
+/* On The Ground */
+.on-ground { padding: 64px 0; background: linear-gradient(135deg, var(--navy-900), var(--navy-800) 60%, var(--purple-500) 150%); }
+.on-ground-inner { display: grid; grid-template-columns: 0.85fr 1.25fr; gap: 40px; align-items: center; }
+.on-ground-photo {
+  width: 100%; max-width: 320px; aspect-ratio: 4/5; object-fit: cover; border-radius: var(--radius);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.45); margin: 0 auto; border: 4px solid rgba(255,255,255,0.14);
+}
+.on-ground-text h3 {
+  font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; color: #fff; margin: 4px 0 14px;
+}
+.on-ground-text p { color: rgba(255,255,255,0.85); margin: 0 0 20px; max-width: 480px; }
+
 /* Vehicles */
 .vehicles { padding: 76px 0; }
 .veh-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; margin-top: 36px; }
@@ -382,7 +394,9 @@ h1, h2, h3 { font-family: var(--font-head); line-height: 1.18; margin: 0; letter
 /* Responsive */
 @media (max-width: 860px) {
   .service-grid, .steps-grid, .delivered-grid, .testimonial-grid { grid-template-columns: 1fr 1fr; }
-  .about-inner, .contact-inner { grid-template-columns: 1fr; }
+  .about-inner, .contact-inner, .on-ground-inner { grid-template-columns: 1fr; }
+  .on-ground-inner { text-align: center; }
+  .on-ground-text p { margin-left: auto; margin-right: auto; }
   .hero-grid { grid-template-columns: 1fr; }
   .hero-art { order: -1; margin-bottom: 8px; }
 }
