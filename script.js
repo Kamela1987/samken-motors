@@ -61,6 +61,48 @@ document.querySelectorAll(".veh-slider").forEach(function (box) {
   });
 });
 
+/* Ships & shipments in transit */
+(function () {
+  var grid = document.getElementById("shipmentsGrid");
+  if (!grid) return;
+
+  function fmtDate(iso) {
+    var d = new Date(iso + "T00:00:00");
+    if (isNaN(d)) return iso;
+    return d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+  }
+
+  var originClass = { "south-africa": "ship-origin-sa", "namibia": "ship-origin-na", "tanzania": "ship-origin-tz" };
+
+  fetch("data/shipments.json")
+    .then(function (r) { return r.json(); })
+    .then(function (shipments) {
+      if (!shipments.length) {
+        grid.innerHTML = '<p class="shipments-loading">No active shipments right now &mdash; check back soon.</p>';
+        return;
+      }
+      grid.innerHTML = shipments.map(function (s) {
+        return (
+          '<article class="ship-card">' +
+            '<div class="ship-card-top">' +
+              '<span class="ship-icon ' + (originClass[s.origin] || "") + '" aria-hidden="true"><svg width="22" height="22"><use href="#icon-ship"/></svg></span>' +
+              '<span class="ship-status ship-status-' + s.status + '">' + s.statusLabel + '</span>' +
+            '</div>' +
+            '<h3 class="ship-route">' + s.route + '</h3>' +
+            '<div class="ship-dates">' +
+              '<span><strong>Departed</strong>' + fmtDate(s.departed) + '</span>' +
+              '<span><strong>' + (s.status === "delivered" ? "Arrived" : "Est. Arrival") + '</strong>' + fmtDate(s.eta) + '</span>' +
+            '</div>' +
+            '<span class="ship-vehicles">' + s.vehicles + ' vehicle' + (s.vehicles === 1 ? "" : "s") + ' aboard</span>' +
+          '</article>'
+        );
+      }).join("");
+    })
+    .catch(function () {
+      grid.innerHTML = '<p class="shipments-loading">Couldn\'t load shipment status right now &mdash; please refresh.</p>';
+    });
+})();
+
 /* Vehicle tracker */
 (function () {
   var form = document.getElementById("trackForm");

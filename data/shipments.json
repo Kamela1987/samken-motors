@@ -1,0 +1,47 @@
+[
+  {
+    "route": "Durban, South Africa → Zambia",
+    "origin": "south-africa",
+    "status": "at-sea",
+    "statusLabel": "At Sea",
+    "departed": "2026-09-29",
+    "eta": "2026-10-14",
+    "vehicles": 4
+  },
+  {
+    "route": "Walvis Bay, Namibia → Zambia",
+    "origin": "namibia",
+    "status": "offloading",
+    "statusLabel": "Docked — Offloading",
+    "departed": "2026-09-20",
+    "eta": "2026-10-08",
+    "vehicles": 2
+  },
+  {
+    "route": "Dar es Salaam, Tanzania → Zambia",
+    "origin": "tanzania",
+    "status": "clearing",
+    "statusLabel": "Docked — Customs Clearing",
+    "departed": "2026-09-15",
+    "eta": "2026-10-10",
+    "vehicles": 3
+  },
+  {
+    "route": "Johannesburg, South Africa → Zambia",
+    "origin": "south-africa",
+    "status": "transit",
+    "statusLabel": "Cleared — In Transit",
+    "departed": "2026-09-12",
+    "eta": "2026-10-09",
+    "vehicles": 2
+  },
+  {
+    "route": "Dar es Salaam, Tanzania → Zambia",
+    "origin": "tanzania",
+    "status": "delivered",
+    "statusLabel": "Delivered",
+    "departed": "2026-08-30",
+    "eta": "2026-09-22",
+    "vehicles": 3
+  }
+]
