@@ -67,6 +67,7 @@ document.querySelectorAll(".veh-slider").forEach(function (box) {
   if (!grid) return;
 
   function fmtDate(iso) {
+    if (!iso) return "To be confirmed";
     var d = new Date(iso + "T00:00:00");
     if (isNaN(d)) return iso;
     return d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
@@ -88,12 +89,12 @@ document.querySelectorAll(".veh-slider").forEach(function (box) {
               '<span class="ship-icon ' + (originClass[s.origin] || "") + '" aria-hidden="true"><svg width="22" height="22"><use href="#icon-ship"/></svg></span>' +
               '<span class="ship-status ship-status-' + s.status + '">' + s.statusLabel + '</span>' +
             '</div>' +
-            '<h3 class="ship-route">' + s.route + '</h3>' +
+            '<h3 class="ship-route">' + (s.vessel ? s.vessel + ' &mdash; ' : '') + s.route + '</h3>' +
             '<div class="ship-dates">' +
               '<span><strong>Departed</strong>' + fmtDate(s.departed) + '</span>' +
               '<span><strong>' + (s.status === "delivered" ? "Arrived" : "Est. Arrival") + '</strong>' + fmtDate(s.eta) + '</span>' +
             '</div>' +
-            '<span class="ship-vehicles">' + s.vehicles + ' vehicle' + (s.vehicles === 1 ? "" : "s") + ' aboard</span>' +
+            (s.vehicles ? '<span class="ship-vehicles">' + s.vehicles + ' vehicle' + (s.vehicles === 1 ? "" : "s") + ' aboard</span>' : '') +
           '</article>'
         );
       }).join("");
