@@ -60,3 +60,86 @@ document.querySelectorAll(".veh-slider").forEach(function (box) {
     x0 = null;
   });
 });
+
+/* Vehicle tracker */
+(function () {
+  var form = document.getElementById("trackForm");
+  if (!form) return;
+  var input = document.getElementById("trackInput");
+  var result = document.getElementById("trackResult");
+  var dataPromise = null;
+
+  function loadData() {
+    if (!dataPromise) {
+      dataPromise = fetch("data/tracking.json").then(function (r) { return r.json(); });
+    }
+    return dataPromise;
+  }
+
+  function fmtDate(iso) {
+    if (!iso) return "";
+    var d = new Date(iso + "T00:00:00");
+    if (isNaN(d)) return iso;
+    return d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function render(order) {
+    var firstPendingIndex = order.stages.findIndex(function (s) { return !s.date; });
+    var rows = order.stages.map(function (stage, i) {
+      var status = stage.date ? "done" : (i === firstPendingIndex ? "current" : "upcoming");
+      var when = stage.date
+        ? fmtDate(stage.date)
+        : (status === "current" && stage.estimate ? "Estimated " + fmtDate(stage.estimate) : (status === "current" ? "In progress" : "Pending"));
+      return (
+        '<li class="track-step track-step-' + status + '">' +
+          '<span class="track-step-dot" aria-hidden="true"></span>' +
+          '<span class="track-step-body"><strong>' + escapeHtml(stage.label) + '</strong><span>' + escapeHtml(when) + '</span></span>' +
+        '</li>'
+      );
+    }).join("");
+
+    result.innerHTML =
+      '<div class="track-card">' +
+        '<p class="track-card-vehicle"><strong>' + escapeHtml(order.vehicle) + '</strong>' +
+        (order.origin ? ' &middot; from ' + escapeHtml(order.origin) : '') + '</p>' +
+        '<ul class="track-steps">' + rows + '</ul>' +
+      '</div>';
+    result.hidden = false;
+  }
+
+  function renderNotFound(ref) {
+    result.innerHTML =
+      '<div class="track-card track-card-empty">' +
+        '<p>We couldn\'t find an order for code <strong>' + escapeHtml(ref) + '</strong>. Double-check the code we sent you, or ' +
+        '<a href="https://wa.me/260977882762" target="_blank" rel="noopener">WhatsApp us</a> and we\'ll look it up.</p>' +
+      '</div>';
+    result.hidden = false;
+  }
+
+  function search(ref) {
+    ref = (ref || "").trim().toUpperCase();
+    if (!ref) return;
+    loadData().then(function (orders) {
+      var order = orders.find(function (o) { return o.ref.toUpperCase() === ref; });
+      if (order) render(order); else renderNotFound(ref);
+    });
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    search(input.value);
+  });
+
+  document.querySelectorAll(".track-demo-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      input.value = btn.dataset.demo;
+      search(btn.dataset.demo);
+    });
+  });
+})();

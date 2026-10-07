@@ -1,0 +1,15 @@
+[
+  {
+    "ref": "DEMO-001",
+    "vehicle": "Toyota Hilux 2.8 GD-6 Legend Double Cab (sample lookup — try this code)",
+    "origin": "Durban, South Africa",
+    "stages": [
+      { "label": "Deposit received", "date": "2026-09-10" },
+      { "label": "Vehicle purchased & documentation", "date": "2026-09-14" },
+      { "label": "Shipped from origin port", "date": "2026-09-20" },
+      { "label": "Arrived & clearing customs", "date": "2026-10-02" },
+      { "label": "In transit to Zambia", "date": null, "estimate": "2026-10-12" },
+      { "label": "Delivered to customer", "date": null, "estimate": null }
+    ]
+  }
+]
