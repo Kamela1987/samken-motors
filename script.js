@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initMobileNav();
   initVehicleTracker();
   renderVehiclesCatalog();
+  renderDeliveredVehicles();
 });
 
 function initMobileNav() {
@@ -66,8 +67,9 @@ function makeVehicleImageMarkup(car) {
 }
 
 function initVehicleSliders() {
-  const grid = document.getElementById('vehicles-grid-target');
-  if (!grid) return;
+  if (window.__slidersReady) return;
+  window.__slidersReady = true;
+  const grid = document;
 
   const move = (slider, step) => {
     const slides = slider.querySelectorAll('.car-slide');
@@ -142,6 +144,32 @@ function renderVehiclesCatalog() {
           <a href="${whatsappUrl}" target="_blank" rel="noopener" class="btn btn-whatsapp">
             💬 Ask About This Vehicle
           </a>
+        </div>
+      </article>
+    `;
+  }).join('');
+
+  initVehicleSliders();
+}
+
+const deliveredVehicles = [
+  { title: 'Mazda Demio', place: 'Choma', folder: 'delivered-mazda-demio-choma', count: 5 },
+  { title: 'Toyota Wish', place: 'Mongu', folder: 'delivered-toyota-wish-mongu', count: 3 }
+];
+
+function renderDeliveredVehicles() {
+  const target = document.getElementById('delivered-grid-target');
+  if (!target) return;
+
+  target.innerHTML = deliveredVehicles.map((item) => {
+    const photos = Array.from({ length: item.count }, (_, i) => `images/${item.folder}-${i + 1}.jpg`);
+    return `
+      <article class="car-card">
+        ${makeVehicleImageMarkup({ title: `${item.title} delivered to a customer in ${item.place}`, photos })}
+        <div class="car-info">
+          <span class="car-location-badge">Delivered</span>
+          <h3>${item.title}</h3>
+          <p class="car-price-note">Delivered to a customer in ${item.place}</p>
         </div>
       </article>
     `;
