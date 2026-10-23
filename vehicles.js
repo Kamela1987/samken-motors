@@ -1,176 +1,127 @@
-document.addEventListener('DOMContentLoaded', () => {
-  initMobileNav();
-  initVehicleTracker();
-  renderVehiclesCatalog();
-});
-
-function initMobileNav() {
-  const navToggle = document.getElementById('nav-toggle');
-  const navMenu = document.getElementById('nav-menu');
-
-  if (!navToggle || !navMenu) return;
-
-  navToggle.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-  });
-
-  navMenu.querySelectorAll('a').forEach((link) => {
-    link.addEventListener('click', () => navMenu.classList.remove('active'));
-  });
-}
-
-function formatVehiclePrice(price, currency = '') {
-  if (typeof price === 'number') {
-    const formatted = price.toLocaleString('en-ZM');
-    return `${currency}${formatted}`;
+const vehicles = [
+  {
+    id: "toyota-hilux-28-gd6",
+    title: "Toyota Hilux 2.8 GD-6 Legend Double Cab",
+    price: 950000,
+    currency: "K",
+    fuel: "Diesel",
+    color: "White",
+    status: "Available",
+    location: "Sourced to Order",
+    imagesCount: 7,
+    photo: "images/hilux-1.jpg",
+    photos: [
+      "images/hilux-1.jpg",
+      "images/hilux-2.jpg",
+      "images/hilux-3.jpg",
+      "images/hilux-4.jpg",
+      "images/hilux-5.jpg",
+      "images/hilux-6.jpg",
+      "images/hilux-7.jpg"
+    ],
+    features: [
+      "2.8 GD-6 diesel, Legend double cab",
+      "White exterior paint work",
+      "Chrome nudge bar and roll bar",
+      "Soft tonneau cover",
+      "Heavy-duty tow bar",
+      "Side steps and functional bonnet guard",
+      "Integrated parking sensors",
+      "All-terrain tyres"
+    ],
+    whatsappLink: "https://wa.me/260977882762?text=Hi,%20I'm%20interested%20in%20the%20Toyota%20Hilux%202.8%20GD-6%20Legend"
+  },
+  {
+    id: "honda-fit-automatic",
+    title: "Honda Fit (Automatic)",
+    price: 120000,
+    basePriceWithoutAndroid: 110000,
+    currency: "K",
+    fuel: "Petrol",
+    color: "Bright Red",
+    status: "In Stock",
+    location: "Lusaka",
+    imagesCount: 7,
+    photo: "images/honda-fit-1.jpg",
+    photos: [
+      "images/honda-fit-1.jpg",
+      "images/honda-fit-2.jpg",
+      "images/honda-fit-3.jpg",
+      "images/honda-fit-4.jpg",
+      "images/honda-fit-5.jpg",
+      "images/honda-fit-6.jpg",
+      "images/honda-fit-7.jpg"
+    ],
+    features: [
+      "Automatic transmission",
+      "Bright red, clean body finish",
+      "Android-powered touchscreen music system (maps, Bluetooth, and phone apps)",
+      "Reverse camera for easy, stress-free parking",
+      "Comfortable leather-style seats",
+      "Good fuel economy and low running costs",
+      "Viewing available: come and see it, test it, and drive it"
+    ],
+    whatsappLink: "https://wa.me/260977882762?text=Hi,%20I'm%20interested%20in%20the%20Red%20Honda%20Fit%20in%20Lusaka"
+  },
+  {
+    id: "volvo-fl-dropside",
+    title: "Volvo FL Dropside Truck (Available to Order)",
+    price: "Price on request",
+    currency: "",
+    fuel: "Diesel",
+    color: "White",
+    status: "Available to Order",
+    location: "South Africa",
+    imagesCount: 3,
+    photo: "images/volvo-fl-1.jpg",
+    photos: [
+      "images/volvo-fl-1.jpg",
+      "images/volvo-fl-2.jpg",
+      "images/volvo-fl-3.jpg"
+    ],
+    features: [
+      "Volvo FL series rigid truck chassis",
+      "Dropside body configuration with steel headboard and mesh guard",
+      "Manual gearbox system",
+      "Heavy-duty front bull bar",
+      "315/80R22.5 sizing tyres, spare wheel included",
+      "Large-capacity diesel tank",
+      "Clean cab interior with comfortable seats, heater/fan, and good dashboard status",
+      "South African registered, exceptionally well kept",
+      "Ideal for transport business, building materials, farm produce, general cargo, and deliveries"
+    ],
+    whatsappLink: "https://wa.me/260977882762?text=Hi,%20I%20want%20a%20written%20quote%20for%20the%20Volvo%20FL%20Dropside%20Truck"
+  },
+  {
+    id: "tandem-axle-dropside",
+    title: "Tandem-Axle Dropside Truck 6x4 (Available to Order)",
+    price: "Price on request",
+    currency: "",
+    fuel: "Diesel",
+    color: "White",
+    status: "Available to Order",
+    location: "South Africa",
+    imagesCount: 2,
+    photo: "images/dropside-6x4-1.jpg",
+    photos: [
+      "images/dropside-6x4-1.jpg",
+      "images/dropside-6x4-2.jpg"
+    ],
+    features: [
+      "Tandem rear axle (6x4 configuration) for extra high load capacity",
+      "Long dropside body framework equipped with high cargo rails",
+      "Freshly painted, clean white bodywork finish",
+      "Reflective safety compliance strips and rear chevron board",
+      "Rear underrun safety bumper and fitted mudflaps",
+      "Good, reliable tyres all around the vehicle",
+      "South African registered, well kept structural condition",
+      "Built for heavy loads: building materials, cement, farm produce, general cargo, and long-distance transport"
+    ],
+    whatsappLink: "https://wa.me/260977882762?text=Hi,%20I%20want%20a%20written%20quote%20for%20the%20Tandem-Axle%20Dropside%206x4%20Truck"
   }
+];
 
-  if (typeof price === 'string' && price.trim()) {
-    return price.trim();
-  }
-
-  return 'Price on request';
-}
-
-function makeVehicleImageMarkup(car) {
-  const imageList = Array.isArray(car.photos) && car.photos.length
-    ? car.photos
-    : Array.isArray(car.photo)
-      ? car.photo
-      : car.photo
-        ? [car.photo]
-        : [];
-
-  if (!imageList.length) {
-    return `
-      <div class="car-image-placeholder" aria-label="${car.title}">
-        <span aria-hidden="true">🚗</span>
-        <span class="image-badge">1 Photo</span>
-      </div>
-    `;
-  }
-
-  const primaryImage = imageList[0];
-  const badgeText = imageList.length > 1 ? `${imageList.length} Photos` : '1 Photo';
-
-  return `
-    <div class="car-image-frame" aria-label="${car.title}">
-      <img src="${primaryImage}" alt="${car.title}" loading="lazy" class="car-vehicle-image" />
-      <span class="image-badge">${badgeText}</span>
-    </div>
-  `;
-}
-
-function renderVehiclesCatalog() {
-  const targetGrid = document.getElementById('vehicles-grid-target');
-  if (!targetGrid || typeof vehicles === 'undefined') return;
-
-  targetGrid.innerHTML = vehicles.map((car) => {
-    const formattedPrice = formatVehiclePrice(car.price, car.currency || 'K');
-    const features = Array.isArray(car.features) ? car.features.slice(0, 4) : [];
-    const whatsappUrl = car.whatsappLink || 'https://wa.me/260977882762';
-
-    return `
-      <article class="car-card">
-        ${makeVehicleImageMarkup(car)}
-        <div class="car-info">
-          <span class="car-location-badge">${car.location || 'Sourced to Order'}</span>
-          <h3>${car.title}</h3>
-          <p class="car-price-tag">${formattedPrice}</p>
-          <ul class="car-features-list">
-            ${features.map((feature) => `<li>${feature}</li>`).join('')}
-          </ul>
-          <a href="${whatsappUrl}" target="_blank" rel="noopener" class="btn btn-whatsapp">
-            💬 Ask About This Vehicle
-          </a>
-        </div>
-      </article>
-    `;
-  }).join('');
-}
-
-function initVehicleTracker() {
-  const trackerForm = document.getElementById('vessel-tracker-form');
-  const inputField = document.getElementById('tracking-ref-code');
-  const outputDisplay = document.getElementById('tracking-results-output');
-
-  if (!trackerForm || !inputField || !outputDisplay) return;
-
-  const mockTrackingDatabase = {
-    'DEMO-001': {
-      client: 'Mr. Valentine (Kawambwa)',
-      status: 'In Transit - Border Clearance',
-      currentLocation: 'Nakonde Border Post',
-      lastUpdate: '23 Oct 2026 15:42 CAT',
-      progress: 75,
-      route: 'Dar es Salaam Port → Nakonde → Kawambwa',
-      notes: 'Customs duty paid via Gwaliz Logistics. Vehicle clearing steps are completing. Driver assignment underway for the remaining 700km highway transit segment.'
-    },
-    'DEMO-002': {
-      client: 'Mrs. Mwewa (Lusaka)',
-      status: 'Port Release & Documentation',
-      currentLocation: 'Dar es Salaam Port',
-      lastUpdate: '24 Oct 2026 09:15 CAT',
-      progress: 55,
-      route: 'Dar es Salaam Port → Nakonde → Lusaka',
-      notes: 'Documentation verification in progress. Release approval is being processed before the final road transfer leg.'
-    }
-  };
-
-  trackerForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const codeKey = inputField.value.trim().toUpperCase();
-
-    if (!codeKey) {
-      outputDisplay.style.display = 'block';
-      outputDisplay.innerHTML = `
-        <div class="tracking-card-result error-state">
-          <h4>⚠️ Reference required</h4>
-          <p>Please enter a valid reference code before searching the shipment registry.</p>
-        </div>
-      `;
-      return;
-    }
-
-    outputDisplay.innerHTML = '<div class="tracker-loading">Searching tracking index registries...</div>';
-    outputDisplay.style.display = 'block';
-
-    setTimeout(() => {
-      const data = mockTrackingDatabase[codeKey];
-
-      if (data) {
-        outputDisplay.innerHTML = `
-          <div class="tracking-card-result success-state">
-            <div class="result-header">
-              <h4>Reference: <span class="highlight-code">${codeKey}</span></h4>
-              <span class="status-pill">${data.status}</span>
-            </div>
-            <div class="progress-bar-container">
-              <div class="progress-bar-fill" style="width: ${data.progress}%"></div>
-              <span class="progress-percentage-label">${data.progress}% Complete</span>
-            </div>
-            <div class="tracking-grid-details">
-              <p><strong>Destination:</strong> ${data.client}</p>
-              <p><strong>Current Site:</strong> <span class="text-alert">${data.currentLocation}</span></p>
-              <p><strong>Route Grid:</strong> ${data.route}</p>
-              <p><strong>Updated:</strong> ${data.lastUpdate}</p>
-            </div>
-            <div class="tracking-notes-block">
-              <h5>Official Transit Dispatch Logs</h5>
-              <p>${data.notes}</p>
-            </div>
-          </div>
-        `;
-      } else {
-        outputDisplay.innerHTML = `
-          <div class="tracking-card-result error-state">
-            <h4>⚠️ Reference Code Not Found</h4>
-            <p>The code <strong>"${codeKey}"</strong> does not match active vehicle manifests.</p>
-            <p style="margin-top:0.5rem; color:#666;">Coordinate with dispatch teams via WhatsApp (+260 977 882 762) to activate your tracker profile.</p>
-          </div>
-        `;
-      }
-    }, 650);
-  });
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = vehicles;
 }
 
