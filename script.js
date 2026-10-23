@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initVehicleTracker();
   renderVehiclesCatalog();
   renderDeliveredVehicles();
+  renderPortWatch();
 });
 
 function initMobileNav() {
@@ -51,6 +52,7 @@ function makeVehicleImageMarkup(car) {
   const slides = imageList.map((src, i) => `
       <img src="${src}" alt="${car.title} - photo ${i + 1}" loading="${i === 0 ? 'eager' : 'lazy'}"
            class="car-vehicle-image car-slide${i === 0 ? ' active' : ''}"
+           onload="this.classList.toggle('is-portrait', this.naturalHeight > this.naturalWidth * 0.95)"
            onerror="this.classList.add('img-broken')" />`).join('');
 
   const controls = imageList.length > 1 ? `
@@ -178,87 +180,96 @@ function renderDeliveredVehicles() {
   initVehicleSliders();
 }
 
+function escapeHtml(value) {
+  return String(value == null ? '' : value).replace(/[&<>"']/g, (c) => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+  ));
+}
+
+function formatShortDate(value) {
+  if (!value) return '';
+  const d = new Date(value + 'T00:00:00');
+  return isNaN(d) ? value : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+async function renderPortWatch() {
+  const target = document.getElementById('vessel-list-target');
+  if (!target) return;
+  try {
+    const res = await fetch('data/shipments.json', { cache: 'no-cache' });
+    if (!res.ok) throw new Error('bad response');
+    const ships = await res.json();
+    if (!Array.isArray(ships) || !ships.length) throw new Error('empty');
+    target.innerHTML = ships.map((ship) => {
+      const tone = ship.status === 'offloading' ? 'status-green' : 'status-amber';
+      const extras = [
+        ship.departed ? `Departed: ${formatShortDate(ship.departed)}` : '',
+        ship.eta ? `ETA: ${formatShortDate(ship.eta)}` : '',
+        ship.vehicles ? `${escapeHtml(ship.vehicles)} vehicles` : ''
+      ].filter(Boolean).join(' &middot; ');
+      return `
+        <div class="vessel-item ${escapeHtml(ship.status)}">
+          <div class="vessel-meta">
+            <h4>${escapeHtml(ship.vessel)}</h4>
+            <span class="badge ${tone}">${escapeHtml(ship.statusLabel)}</span>
+          </div>
+          <p>${escapeHtml(ship.route)}${extras ? '<br>' + extras : ''}</p>
+        </div>`;
+    }).join('');
+  } catch (err) {
+    target.innerHTML = '<p>Shipment status is not available right now. Message us on WhatsApp for the latest on your vehicle.</p>';
+  }
+}
+
 function initVehicleTracker() {
   const trackerForm = document.getElementById('vessel-tracker-form');
   const inputField = document.getElementById('tracking-ref-code');
   const outputDisplay = document.getElementById('tracking-results-output');
-
   if (!trackerForm || !inputField || !outputDisplay) return;
 
-  const mockTrackingDatabase = {
-    'DEMO-001': {
-      client: 'Mr. Valentine (Kawambwa)',
-      status: 'In Transit - Border Clearance',
-      currentLocation: 'Nakonde Border Post',
-      lastUpdate: '23 Oct 2026 15:42 CAT',
-      progress: 75,
-      route: 'Dar es Salaam Port → Nakonde → Kawambwa',
-      notes: 'Customs duty paid via Gwaliz Logistics. Vehicle clearing steps are completing. Driver assignment underway for the remaining 700km highway transit segment.'
-    },
-    'DEMO-002': {
-      client: 'Mrs. Mwewa (Lusaka)',
-      status: 'Port Release & Documentation',
-      currentLocation: 'Dar es Salaam Port',
-      lastUpdate: '24 Oct 2026 09:15 CAT',
-      progress: 55,
-      route: 'Dar es Salaam Port → Nakonde → Lusaka',
-      notes: 'Documentation verification in progress. Release approval is being processed before the final road transfer leg.'
-    }
-  };
+  const show = (html) => { outputDisplay.style.display = 'block'; outputDisplay.innerHTML = html; };
+  const notFound = (code) => `
+    <div class="tracking-card-result error-state">
+      <h4>Reference code not found</h4>
+      <p>We could not find <strong>${escapeHtml(code)}</strong>. Check the code, or message us on WhatsApp (+260 977 882 762) to get your tracking reference.</p>
+    </div>`;
 
-  trackerForm.addEventListener('submit', (event) => {
+  trackerForm.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const codeKey = inputField.value.trim().toUpperCase();
-
-    if (!codeKey) {
-      outputDisplay.style.display = 'block';
-      outputDisplay.innerHTML = `
-        <div class="tracking-card-result error-state">
-          <h4>⚠️ Reference required</h4>
-          <p>Please enter a valid reference code before searching the shipment registry.</p>
-        </div>
-      `;
+    const code = inputField.value.trim().toUpperCase();
+    if (!code) {
+      show('<div class="tracking-card-result error-state"><h4>Reference required</h4><p>Please enter your reference code.</p></div>');
       return;
     }
+    show('<div class="tracker-loading">Looking up your reference&hellip;</div>');
 
-    outputDisplay.innerHTML = '<div class="tracker-loading">Searching tracking index registries...</div>';
-    outputDisplay.style.display = 'block';
+    try {
+      const res = await fetch('data/tracking.json', { cache: 'no-cache' });
+      if (!res.ok) throw new Error('bad response');
+      const orders = await res.json();
+      const order = orders.find((o) => String(o.ref).toUpperCase() === code);
+      if (!order) { show(notFound(code)); return; }
 
-    setTimeout(() => {
-      const data = mockTrackingDatabase[codeKey];
+      const done = order.stages.filter((st) => st.date).length;
+      const percent = Math.round((done / order.stages.length) * 100);
+      const stages = order.stages.map((st) => {
+        const when = st.date ? formatShortDate(st.date) : (st.estimate ? 'Est. ' + formatShortDate(st.estimate) : 'Pending');
+        return `<li class="${st.date ? 'stage-done' : 'stage-pending'}"><span>${escapeHtml(st.label)}</span><em>${escapeHtml(when)}</em></li>`;
+      }).join('');
 
-      if (data) {
-        outputDisplay.innerHTML = `
-          <div class="tracking-card-result success-state">
-            <div class="result-header">
-              <h4>Reference: <span class="highlight-code">${codeKey}</span></h4>
-              <span class="status-pill">${data.status}</span>
-            </div>
-            <div class="progress-bar-container">
-              <div class="progress-bar-fill" style="width: ${data.progress}%"></div>
-              <span class="progress-percentage-label">${data.progress}% Complete</span>
-            </div>
-            <div class="tracking-grid-details">
-              <p><strong>Destination:</strong> ${data.client}</p>
-              <p><strong>Current Site:</strong> <span class="text-alert">${data.currentLocation}</span></p>
-              <p><strong>Route Grid:</strong> ${data.route}</p>
-              <p><strong>Updated:</strong> ${data.lastUpdate}</p>
-            </div>
-            <div class="tracking-notes-block">
-              <h5>Official Transit Dispatch Logs</h5>
-              <p>${data.notes}</p>
-            </div>
+      show(`
+        <div class="tracking-card-result success-state">
+          <div class="result-header">
+            <h4>Reference: <span class="highlight-code">${escapeHtml(order.ref)}</span></h4>
+            <span class="status-pill">${percent}% complete</span>
           </div>
-        `;
-      } else {
-        outputDisplay.innerHTML = `
-          <div class="tracking-card-result error-state">
-            <h4>⚠️ Reference Code Not Found</h4>
-            <p>The code <strong>"${codeKey}"</strong> does not match active vehicle manifests.</p>
-            <p style="margin-top:0.5rem; color:#666;">Coordinate with dispatch teams via WhatsApp (+260 977 882 762) to activate your tracker profile.</p>
-          </div>
-        `;
-      }
-    }, 650);
+          <div class="progress-bar-container"><div class="progress-bar-fill" style="width:${percent}%"></div></div>
+          <p><strong>Vehicle:</strong> ${escapeHtml(order.vehicle)}</p>
+          <p><strong>Origin:</strong> ${escapeHtml(order.origin)}</p>
+          <ul class="stage-list">${stages}</ul>
+        </div>`);
+    } catch (err) {
+      show('<div class="tracking-card-result error-state"><h4>Tracking unavailable</h4><p>We could not load tracking data just now. Message us on WhatsApp (+260 977 882 762) for your update.</p></div>');
+    }
   });
 }
