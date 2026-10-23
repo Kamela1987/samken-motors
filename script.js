@@ -155,8 +155,14 @@ function renderVehiclesCatalog() {
 }
 
 const deliveredVehicles = [
-  { title: 'Mazda Demio', place: 'Choma', folder: 'delivered-mazda-demio-choma', count: 5 },
-  { title: 'Toyota Wish', place: 'Mongu', folder: 'delivered-toyota-wish-mongu', count: 3 }
+  {
+    title: 'Toyota Mark X',
+    folder: 'delivered-toyota-mark-x-kawambwa',
+    count: 3,
+    note: 'Delivered to a happy customer, Mr. Valentine, in Kawambwa &mdash; about 1,600 km by road from Dar es Salaam.'
+  },
+  { title: 'Mazda Demio', folder: 'delivered-mazda-demio-choma', count: 5, note: 'Delivered to a customer in Choma.' },
+  { title: 'Toyota Wish', folder: 'delivered-toyota-wish-mongu', count: 3, note: 'Delivered to a customer in Mongu.' }
 ];
 
 function renderDeliveredVehicles() {
@@ -166,12 +172,12 @@ function renderDeliveredVehicles() {
   target.innerHTML = deliveredVehicles.map((item) => {
     const photos = Array.from({ length: item.count }, (_, i) => `images/${item.folder}-${i + 1}.jpg`);
     return `
-      <article class="car-card">
-        ${makeVehicleImageMarkup({ title: `${item.title} delivered to a customer in ${item.place}`, photos })}
+      <article class="car-card card-tall">
+        ${makeVehicleImageMarkup({ title: `${item.title} delivered to a customer`, photos })}
         <div class="car-info">
           <span class="car-location-badge">Delivered</span>
           <h3>${item.title}</h3>
-          <p class="car-price-note">Delivered to a customer in ${item.place}</p>
+          <p class="car-price-note">${item.note}</p>
         </div>
       </article>
     `;
