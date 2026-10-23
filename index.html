@@ -1,144 +1,261 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="SamKen Motors supplies quality vehicles from Namibia, South Africa and Tanzania to Zambia with transparent pricing, clear customs support and reliable delivery."
+    />
+    <meta name="theme-color" content="#0b1329" />
     <title>SamKen Motors | Quality Vehicles Delivered to Zambia</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <header class="navbar">
-        <div class="container nav-container">
-            <div class="brand">
-                <span class="brand-logo">🚗</span>
-                <span class="brand-name">SamKen Motors</span>
-            </div>
-            <button id="nav-toggle" class="nav-toggle-btn" aria-label="Toggle Navigation Menu">
-                <span></span><span></span><span></span>
-            </button>
-            <nav id="nav-menu" class="nav-links">
-                <a href="#inventory-gallery">Our Vehicles</a>
-                <a href="#tracking-portal">Track Order</a>
-                <a href="#clearing-partners">Logistics Partners</a>
-                <a href="#contact-section">Get In Touch</a>
-            </nav>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-container">
+        <div class="brand" aria-label="SamKen Motors home">
+          <span class="brand-logo">🚗</span>
+          <span class="brand-name">SamKen Motors</span>
         </div>
+
+        <button id="nav-toggle" class="nav-toggle-btn" aria-label="Toggle navigation menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav id="nav-menu" class="nav-links" aria-label="Main navigation">
+          <a href="#inventory-gallery">Vehicles</a>
+          <a href="#tracking-portal">Track Order</a>
+          <a href="#process-section">How It Works</a>
+          <a href="#clearing-partners">Partners</a>
+          <a href="#contact-section">Contact</a>
+        </nav>
+      </div>
     </header>
 
     <main>
-        <!-- Inventory Grid Section -->
-        <section id="inventory-gallery" class="inventory-section">
-            <div class="container">
-                <h2>🚘 Available Vehicles &amp; Fleet Inventory</h2>
-                <p class="section-subtitle">Transparent pricing. Complete documentation. Delivered across Zambia.</p>
-                <div id="vehicles-grid-target" class="vehicles-grid">
-                    <!-- Loaded dynamically via JavaScript renderer -->
-                </div>
-            </div>
-        </section>
+      <section class="hero-section">
+        <div class="container hero-layout">
+          <div class="hero-copy">
+            <p class="eyebrow">Trusted sourcing • Customs cleared • Delivered to Zambia</p>
+            <h1>Quality vehicles, transparent pricing, and smooth border delivery.</h1>
+            <p class="hero-text">
+              We source reliable vehicles from Namibia, South Africa and Tanzania, arrange paperwork,
+              handle customs, and deliver to buyers across Zambia with clear communication every step of the way.
+            </p>
 
-        <!-- Live Marine Traffic & Logistics Tracking Module -->
-        <section id="tracking-portal" class="tracking-section">
-          <div class="container">
-            
-            <div class="tracking-layout-wrapper">
-                <!-- Port Watch Sub-component -->
-                <div class="port-watch-card">
-                  <div class="card-header">
-                    <span class="pulse-indicator"></span>
-                    <h3>Port Watch — Dar es Salaam</h3>
-                    <p class="timestamp">Updated: 23 Oct 2026</p>
-                  </div>
-                  <div class="vessel-list">
-                    
-                    <div class="vessel-item discharging">
-                      <div class="vessel-meta">
-                        <h4>MV Sunrise Ace</h4>
-                        <span class="badge status-green">Offloading Now</span>
-                      </div>
-                      <p>Car carrier (200m) from East London, currently berthed at Berth 1. Discharging motor vehicles. Cars on this vessel are being released to owners as clearing completes.</p>
-                    </div>
-
-                    <div class="vessel-item queued">
-                      <div class="vessel-meta">
-                        <h4>MV Freedom Ace</h4>
-                        <span class="badge status-amber">Docked &amp; Next in Line</span>
-                      </div>
-                      <p>Car carrier (200m) arrived at Dar es Salaam port. Lined up and waiting for a free berth to initiate discharging. Clearing teams are prepped and standby.</p>
-                    </div>
-                    
-                  </div>
-                  <p class="disclaimer"><small>Vessel configurations sourced via Tanzania Ports Authority schedules. Times are dynamic to shifting port traffic congestion.</small></p>
-                </div>
-
-                <!-- Interactive Track My Vehicle Engine Interface -->
-                <div class="tracker-card">
-                  <h3>📍 Track My Vehicle Order</h3>
-                  <p>Enter your unique reference tracking code below to trace real-time transit positions.</p>
-                  <form id="vessel-tracker-form" class="tracker-form" onsubmit="event.preventDefault();">
-                    <div class="input-group">
-                      <input type="text" id="tracking-ref-code" placeholder="e.g., DEMO-001" required>
-                      <button type="submit" class="btn btn-primary">Track Shipment</button>
-                    </div>
-                  </form>
-                  <div id="tracking-results-output" class="tracking-output-display"></div>
-                </div>
+            <div class="cta-row">
+              <a class="btn btn-primary" href="https://wa.me/260977882762?text=Hello%20SamKen%20Motors%2C%20I%20want%20to%20buy%20a%20vehicle" target="_blank" rel="noopener">Get a Quote</a>
+              <a class="btn btn-secondary" href="#inventory-gallery">Browse Inventory</a>
             </div>
 
+            <ul class="hero-points" aria-label="Business benefits">
+              <li>Transparent written quotes</li>
+              <li>Customs &amp; border clearing support</li>
+              <li>Delivery across Zambia</li>
+            </ul>
           </div>
-        </section>
 
-        <!-- Regional Logistics and Border Clearing Partners Grid -->
-        <section id="clearing-partners" class="partners-section">
-          <div class="container">
-            <h2>🤝 Our Vetted Clearing &amp; Logistics Partners</h2>
-            <p class="section-subtitle">Licensed processing agencies managing customs documentation and legal clearance tracking at every cross-border corridor.</p>
-            
-            <div class="partners-grid">
-              
-              <article class="partner-card">
-                <div class="partner-branding">
-                  <div class="fallback-logo">GL</div>
-                  <h3>Gwaliz Logistics Limited</h3>
-                </div>
-                <p class="corridor-tag">Customs Clearing &amp; Forwarding — <strong>Nakonde Border, Zambia</strong></p>
-                <p class="service-details">Manages customs registration workflows, complete import/export clearances, overland transit freight arrangements, and secure door-to-door handovers.</p>
-                <a href="tel:+260971104814" class="partner-contact">📞 +260 971 104 814</a>
-              </article>
-
-              <article class="partner-card">
-                <div class="partner-branding">
-                  <div class="fallback-logo">WL</div>
-                  <h3>Wisdom Logistics</h3>
-                </div>
-                <p class="corridor-tag">Clearing &amp; Forwarding Agency — <strong>Dar es Salaam, Tanzania</strong></p>
-                <p class="service-details">“We deliver in time more than expected.” Oversees port container handling, offloading checks, and local manifest declarations under managing directors overseeing document flow and cargo release sequencing.</p>
-                <a href="tel:+255784780350" class="partner-contact">📞 +255 784 780 350</a>
-              </article>
-
-              <article class="partner-card">
-                <div class="partner-branding">
-                  <div class="fallback-logo">BI</div>
-                  <h3>Buildon Investments Limited</h3>
-                </div>
-                <p class="corridor-tag">Clearing &amp; Forwarding — <strong>Kazungula Border, Zambia</strong></p>
-                <p class="service-details">Specialized cross-border customs declarations, freight routing logistics solutions, and processing systems out of Livingstone handling South Africa and Namibia supply lines.</p>
-                <a href="tel:+260977450712" class="partner-contact">📞 +260 977 450 712</a>
-              </article>
-
+          <div class="hero-panel" aria-label="Why SamKen Motors">
+            <div class="panel-badge">Why clients choose us</div>
+            <div class="mini-stat">
+              <strong>3+</strong>
+              <span>Regional sourcing corridors</span>
+            </div>
+            <div class="mini-stat">
+              <strong>100%</strong>
+              <span>Clear documentation support</span>
+            </div>
+            <div class="mini-stat">
+              <strong>Fast</strong>
+              <span>Response via WhatsApp and call</span>
+            </div>
+            <div class="panel-cta">
+              <span>WhatsApp:</span>
+              <a href="https://wa.me/260977882762" target="_blank" rel="noopener">+260 977 882 762</a>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
+
+      <section class="trust-strip" aria-label="Company highlights">
+        <div class="container trust-grid">
+          <div><strong>Door-to-door</strong><span>delivery planning</span></div>
+          <div><strong>Pre-arrival</strong><span>quote and paperwork</span></div>
+          <div><strong>Regional</strong><span>Namibia • South Africa • Tanzania</span></div>
+          <div><strong>Support</strong><span>Border and customs help</span></div>
+        </div>
+      </section>
+
+      <section id="inventory-gallery" class="inventory-section">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow eyebrow-dark">Available vehicles</p>
+            <h2>Fleet inventory</h2>
+            <p class="section-subtitle">
+              Handpicked vehicles ready for purchase, import coordination or direct order placement.
+            </p>
+          </div>
+          <div id="vehicles-grid-target" class="vehicles-grid" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section id="tracking-portal" class="tracking-section">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow eyebrow-dark">Track your order</p>
+            <h2>Shipment progress</h2>
+          </div>
+
+          <div class="tracking-layout-wrapper">
+            <div class="port-watch-card">
+              <div class="card-header">
+                <span class="pulse-indicator"></span>
+                <h3>Port Watch — Dar es Salaam</h3>
+                <p class="timestamp">Updated: 23 Oct 2026</p>
+              </div>
+
+              <div class="vessel-list">
+                <div class="vessel-item discharging">
+                  <div class="vessel-meta">
+                    <h4>MV Sunrise Ace</h4>
+                    <span class="badge status-green">Offloading Now</span>
+                  </div>
+                  <p>
+                    Car carrier (200m) from East London, currently berthed at Berth 1. Discharging motor vehicles.
+                    Cars are being released as customs formalities are completed.
+                  </p>
+                </div>
+
+                <div class="vessel-item queued">
+                  <div class="vessel-meta">
+                    <h4>MV Freedom Ace</h4>
+                    <span class="badge status-amber">Docked &amp; Next in Line</span>
+                  </div>
+                  <p>
+                    Car carrier (200m) arrived in Dar es Salaam and is awaiting berth release for unloading.
+                    Clearing teams are already preparing the next handover steps.
+                  </p>
+                </div>
+              </div>
+
+              <p class="disclaimer">
+                <small>Vessel schedules are indicative and may shift with port activity and border processing.</small>
+              </p>
+            </div>
+
+            <div class="tracker-card">
+              <h3>📍 Track my vehicle order</h3>
+              <p>Use your unique reference code below to view the current transit status.</p>
+
+              <form id="vessel-tracker-form" class="tracker-form" novalidate>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    id="tracking-ref-code"
+                    placeholder="e.g., DEMO-001"
+                    aria-label="Vehicle tracking reference code"
+                    required
+                  />
+                  <button type="submit" class="btn btn-primary">Track</button>
+                </div>
+              </form>
+
+              <div id="tracking-results-output" class="tracking-output-display" aria-live="polite"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="process-section" class="process-section">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow eyebrow-dark">How it works</p>
+            <h2>Simple, transparent buying process</h2>
+          </div>
+
+          <div class="process-grid">
+            <article class="process-card">
+              <span class="step-number">01</span>
+              <h3>Choose your vehicle</h3>
+              <p>Select from available stock or ask for sourcing from Namibia, South Africa or Tanzania.</p>
+            </article>
+
+            <article class="process-card">
+              <span class="step-number">02</span>
+              <h3>Receive a quote</h3>
+              <p>We provide a written quote covering the vehicle, transport, clearing and land delivery cost.</p>
+            </article>
+
+            <article class="process-card">
+              <span class="step-number">03</span>
+              <h3>Track and receive</h3>
+              <p>We handle document flow, customs coordination and final handover to your destination in Zambia.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="clearing-partners" class="partners-section">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow eyebrow-dark">Logistics partners</p>
+            <h2>Cross-border clearing support</h2>
+            <p class="section-subtitle">
+              We work with vetted customs and freight partners to keep the import chain efficient and reliable.
+            </p>
+          </div>
+
+          <div class="partners-grid">
+            <article class="partner-card">
+              <div class="partner-branding">
+                <div class="fallback-logo">GL</div>
+                <h3>Gwaliz Logistics Limited</h3>
+              </div>
+              <p class="corridor-tag">Customs clearing &amp; forwarding — <strong>Nakonde Border, Zambia</strong></p>
+              <p class="service-details">Manages customs registration, import clearances, transit coordination and door-to-door freight handover.</p>
+              <a href="tel:+260971104814" class="partner-contact">📞 +260 971 104 814</a>
+            </article>
+
+            <article class="partner-card">
+              <div class="partner-branding">
+                <div class="fallback-logo">WL</div>
+                <h3>Wisdom Logistics</h3>
+              </div>
+              <p class="corridor-tag">Clearing &amp; forwarding — <strong>Dar es Salaam, Tanzania</strong></p>
+              <p class="service-details">Coordinates cargo release, port handling, local documentation and movement planning for incoming vehicles.</p>
+              <a href="tel:+255784780350" class="partner-contact">📞 +255 784 780 350</a>
+            </article>
+
+            <article class="partner-card">
+              <div class="partner-branding">
+                <div class="fallback-logo">BI</div>
+                <h3>Buildon Investments Limited</h3>
+              </div>
+              <p class="corridor-tag">Clearing &amp; forwarding — <strong>Kazungula Border, Zambia</strong></p>
+              <p class="service-details">Supports cross-border processing, route planning and customs coordination for trucks and imports.</p>
+              <a href="tel:+260977450712" class="partner-contact">📞 +260 977 450 712</a>
+            </article>
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer id="contact-section" class="main-footer">
-        <div class="container footer-content">
-            <p>&copy; 2026 SamKen Motors. Kansenshi, Ndola · Monze · Lusaka, Zambia.</p>
-            <p>WhatsApp Inquiries: <a href="https://wa.me/260977882762">+260 977 882 762</a> | <a href="https://wa.me/260977863898">+260 977 863 898</a></p>
-        </div>
+      <div class="container footer-content">
+        <p>&copy; 2026 SamKen Motors. Kansenshi, Ndola · Monze · Lusaka, Zambia.</p>
+        <p>
+          WhatsApp Inquiries:
+          <a href="https://wa.me/260977882762" target="_blank" rel="noopener">+260 977 882 762</a>
+          |
+          <a href="https://wa.me/260977863898" target="_blank" rel="noopener">+260 977 863 898</a>
+        </p>
+      </div>
     </footer>
 
     <script src="vehicles.js"></script>
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
