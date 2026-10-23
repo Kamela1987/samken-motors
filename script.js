@@ -35,30 +35,69 @@ function formatVehiclePrice(price, currency = '') {
 function makeVehicleImageMarkup(car) {
   const imageList = Array.isArray(car.photos) && car.photos.length
     ? car.photos
-    : Array.isArray(car.photo)
-      ? car.photo
-      : car.photo
-        ? [car.photo]
-        : [];
+    : car.photo
+      ? [car.photo]
+      : [];
 
   if (!imageList.length) {
     return `
       <div class="car-image-placeholder" aria-label="${car.title}">
         <span aria-hidden="true">🚗</span>
-        <span class="image-badge">1 Photo</span>
       </div>
     `;
   }
 
-  const primaryImage = imageList[0];
-  const badgeText = imageList.length > 1 ? `${imageList.length} Photos` : '1 Photo';
+  const slides = imageList.map((src, i) => `
+      <img src="${src}" alt="${car.title} - photo ${i + 1}" loading="${i === 0 ? 'eager' : 'lazy'}"
+           class="car-vehicle-image car-slide${i === 0 ? ' active' : ''}"
+           onerror="this.classList.add('img-broken')" />`).join('');
+
+  const controls = imageList.length > 1 ? `
+      <button type="button" class="slide-btn slide-prev" aria-label="Previous photo">&#8249;</button>
+      <button type="button" class="slide-btn slide-next" aria-label="Next photo">&#8250;</button>` : '';
 
   return `
-    <div class="car-image-frame" aria-label="${car.title}">
-      <img src="${primaryImage}" alt="${car.title}" loading="lazy" class="car-vehicle-image" />
-      <span class="image-badge">${badgeText}</span>
+    <div class="car-image-frame car-slider" data-index="0" aria-label="${car.title}">
+      ${slides}
+      ${controls}
+      <span class="image-badge"><span class="slide-count">1</span> / ${imageList.length}</span>
     </div>
   `;
+}
+
+function initVehicleSliders() {
+  const grid = document.getElementById('vehicles-grid-target');
+  if (!grid) return;
+
+  const move = (slider, step) => {
+    const slides = slider.querySelectorAll('.car-slide');
+    if (slides.length < 2) return;
+    let index = parseInt(slider.dataset.index, 10) || 0;
+    slides[index].classList.remove('active');
+    index = (index + step + slides.length) % slides.length;
+    slides[index].classList.add('active');
+    slider.dataset.index = index;
+    const counter = slider.querySelector('.slide-count');
+    if (counter) counter.textContent = index + 1;
+  };
+
+  grid.addEventListener('click', (event) => {
+    const btn = event.target.closest('.slide-btn');
+    if (!btn) return;
+    move(btn.closest('.car-slider'), btn.classList.contains('slide-next') ? 1 : -1);
+  });
+
+  let startX = null;
+  grid.addEventListener('touchstart', (event) => {
+    if (event.target.closest('.car-slider')) startX = event.touches[0].clientX;
+  }, { passive: true });
+  grid.addEventListener('touchend', (event) => {
+    const slider = event.target.closest('.car-slider');
+    if (!slider || startX === null) return;
+    const diff = event.changedTouches[0].clientX - startX;
+    if (Math.abs(diff) > 40) move(slider, diff < 0 ? 1 : -1);
+    startX = null;
+  });
 }
 
 function renderVehiclesCatalog() {
@@ -67,19 +106,39 @@ function renderVehiclesCatalog() {
 
   targetGrid.innerHTML = vehicles.map((car) => {
     const formattedPrice = formatVehiclePrice(car.price, car.currency || 'K');
-    const features = Array.isArray(car.features) ? car.features.slice(0, 4) : [];
+    const features = Array.isArray(car.features) ? car.features : [];
     const whatsappUrl = car.whatsappLink || 'https://wa.me/260977882762';
+
+    const specs = [
+      car.status ? ['Status', car.status] : null,
+      car.location ? ['Location', car.location] : null,
+      car.fuel ? ['Fuel', car.fuel] : null,
+      car.color ? ['Colour', car.color] : null
+    ].filter(Boolean);
+
+    const priceNote = car.basePriceWithoutAndroid
+      ? `<p class="car-price-note">K${car.basePriceWithoutAndroid.toLocaleString('en-ZM')} without the Android music system</p>`
+      : (typeof car.price === 'string'
+          ? '<p class="car-price-note">Full landed price in one written quote (vehicle + transport + ZRA duty + clearing)</p>'
+          : '');
 
     return `
       <article class="car-card">
         ${makeVehicleImageMarkup(car)}
         <div class="car-info">
-          <span class="car-location-badge">${car.location || 'Sourced to Order'}</span>
+          <span class="car-location-badge">${car.status || car.location || 'Sourced to Order'}</span>
           <h3>${car.title}</h3>
           <p class="car-price-tag">${formattedPrice}</p>
-          <ul class="car-features-list">
-            ${features.map((feature) => `<li>${feature}</li>`).join('')}
+          ${priceNote}
+          <ul class="car-specs">
+            ${specs.map(([k, v]) => `<li><strong>${k}:</strong> ${v}</li>`).join('')}
           </ul>
+          <details class="car-details" open>
+            <summary>Full details</summary>
+            <ul class="car-features-list">
+              ${features.map((feature) => `<li>${feature}</li>`).join('')}
+            </ul>
+          </details>
           <a href="${whatsappUrl}" target="_blank" rel="noopener" class="btn btn-whatsapp">
             💬 Ask About This Vehicle
           </a>
@@ -87,6 +146,8 @@ function renderVehiclesCatalog() {
       </article>
     `;
   }).join('');
+
+  initVehicleSliders();
 }
 
 function initVehicleTracker() {
