@@ -1,102 +1,112 @@
-/* Global Brand Stylesheet for SamKen Motors */
-:root {
-  --navy-dark: #0b1329;
-  --navy-primary: #1c2541;
-  --navy-light: #3a506b;
-  --gold-primary: #e5a93b;
-  --gold-light: #f4d35e;
-  --text-dark: #1e293b;
-  --text-light: #f8fafc;
-  --white: #ffffff;
+document.addEventListener('DOMContentLoaded', () => {
+  initMobileNav();
+  initVehicleTracker();
+  renderVehiclesCatalog();
+});
+
+function initMobileNav() {
+  const navToggle = document.getElementById('nav-toggle');
+  const navMenu = document.getElementById('nav-menu');
+
+  if (navToggle && navMenu) {
+    navToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+      navToggle.classList.toggle('toggle-open');
+    });
+  }
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-body { background: #f1f5f9; color: var(--text-dark); line-height: 1.5; }
-.container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+function initVehicleTracker() {
+  const trackerForm = document.getElementById('vessel-tracker-form');
+  const inputField = document.getElementById('tracking-ref-code');
+  const outputDisplay = document.getElementById('tracking-results-output');
 
-/* Navbar UI Layout */
-.navbar { background: var(--navy-dark); padding: 1rem 0; color: var(--white); position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
-.nav-container { display: flex; justify-content: space-between; align-items: center; }
-.brand { display: flex; align-items: center; gap: 0.5rem; font-size: 1.25rem; font-weight: bold; color: var(--gold-light); }
-.nav-links a { color: var(--text-light); text-decoration: none; margin-left: 1.5rem; font-size: 0.95rem; font-weight: 500; transition: color 0.2s; }
-.nav-links a:hover { color: var(--gold-primary); }
-.nav-toggle-btn { display: none; background: none; border: none; flex-direction: column; gap: 4px; cursor: pointer; }
-.nav-toggle-btn span { width: 24px; height: 3px; background: white; border-radius: 2px; }
+  if (!trackerForm || !inputField || !outputDisplay) return;
 
-/* Core Layout Grids */
-section { padding: 4rem 0; }
-h2 { font-size: 2rem; color: var(--navy-dark); margin-bottom: 0.5rem; text-align: center; }
-.section-subtitle { text-align: center; color: #64748b; margin-bottom: 3rem; font-size: 1.1rem; }
+  const mockTrackingDatabase = {
+    "DEMO-001": {
+      client: "Mr. Valentine (Kawambwa)",
+      status: "In Transit - Border Clearance",
+      currentLocation: "Nakonde Border Post",
+      lastUpdate: "23 Oct 2026 15:42 CAT",
+      progress: 75,
+      route: "Dar es Salaam Port → Nakonde → Kawambwa",
+      notes: "Customs duty paid via Gwaliz Logistics. Vehicle clearing steps are completing. Driver assignment underway for the remaining 700km highway transit segment."
+    }
+  };
 
-/* Inventory Grid Module Layout */
-.vehicles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; }
-.car-card { background: var(--white); border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); display: flex; flex-direction: column; transition: transform 0.2s; }
-.car-card:hover { transform: translateY(-4px); }
-.car-image-placeholder { height: 180px; background: #cbd5e1; display: flex; justify-content: center; align-items: center; position: relative; font-size: 3rem; }
-.image-badge { position: absolute; bottom: 8px; right: 8px; background: rgba(15, 23, 42, 0.75); color: white; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; }
-.car-info { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
-.car-location-badge { font-size: 0.75rem; text-transform: uppercase; background: #e2e8f0; color: #475569; padding: 0.1rem 0.4rem; border-radius: 4px; width: max-content; margin-bottom: 0.5rem; }
-.car-price-tag { font-size: 1.4rem; font-weight: bold; color: var(--navy-primary); margin: 0.5rem 0 1rem 0; }
-.car-features-list { list-style: none; margin-bottom: 1.5rem; flex-grow: 1; }
-.car-features-list li { font-size: 0.85rem; color: #475569; margin-bottom: 0.25rem; }
+  trackerForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const codeKey = inputField.value.trim().toUpperCase();
+    
+    outputDisplay.innerHTML = `<div class="tracker-loading">Searching tracking index registries...</div>`;
+    outputDisplay.style.display = "block";
 
-/* Tracking Grid UI Layer blocks */
-.tracking-layout-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-top: 1rem; }
-.port-watch-card, .tracker-card { background: var(--white); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
-.card-header { position: relative; padding-bottom: 1rem; border-bottom: 1px solid #e2e8f0; margin-bottom: 1.5rem; }
-.pulse-indicator { width: 10px; height: 10px; background: #22c55e; border-radius: 50%; display: inline-block; position: absolute; right: 0; top: 5px; box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); animation: pulse 2s infinite; }
-.vessel-item { padding: 1rem 0; border-bottom: 1px dashed #e2e8f0; }
-.vessel-item:last-child { border-bottom: none; }
-.vessel-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
-.badge { font-size: 0.7rem; font-weight: bold; padding: 0.15rem 0.4rem; border-radius: 4px; }
-.status-green { background: #dcfce7; color: #166534; }
-.status-amber { background: #fef9c3; color: #854d0e; }
-
-/* Interactive Input Elements Elements */
-.input-group { display: flex; gap: 0.5rem; margin-top: 1rem; }
-.input-group input { flex-grow: 1; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 1rem; }
-.btn { display: inline-block; padding: 0.75rem 1rem; font-weight: 600; text-align: center; border-radius: 4px; text-decoration: none; cursor: pointer; border: none; font-size: 0.95rem; }
-.btn-primary { background: var(--navy-primary); color: white; transition: background 0.2s; }
-.btn-primary:hover { background: var(--navy-dark); }
-.btn-whatsapp { background: #25d366; color: white; margin-top: auto; }
-.btn-whatsapp:hover { background: #20ba5a; }
-
-/* Tracking Output Processing Visualization */
-.tracking-output-display { display: none; margin-top: 1.5rem; padding: 1.25rem; border-radius: 6px; background: #f8fafc; border: 1px solid #e2e8f0; }
-.status-pill { padding: 0.25rem 0.6rem; border-radius: 99px; font-size: 0.8rem; font-weight: bold; background: #e0f2fe; color: #0369a1; }
-.progress-bar-container { background: #e2e8f0; border-radius: 99px; height: 16px; position: relative; margin: 1.5rem 0; overflow: hidden; }
-.progress-bar-fill { background: var(--gold-primary); height: 100%; transition: width 0.5s ease-out; }
-.progress-percentage-label { position: absolute; inset: 0; text-align: center; font-size: 0.75rem; line-height: 16px; color: #000; font-weight: 600; }
-.tracking-grid-details p { font-size: 0.9rem; margin-bottom: 0.4rem; color: #475569; }
-.tracking-notes-block { background: #fff; padding: 1rem; border-left: 4px solid var(--navy-primary); border-radius: 4px; margin-top: 1rem; }
-.tracking-notes-block h5 { margin-bottom: 0.25rem; font-size: 0.85rem; color: var(--navy-dark); }
-.error-state { border-left: 4px solid #ef4444; background: #fef2f2; padding: 1rem; }
-.text-alert { color: #b45309; font-weight: 600; }
-
-/* Logistics Grid Layout rules */
-.partners-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
-.partner-card { background: var(--white); padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
-.partner-branding { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
-.fallback-logo { width: 45px; height: 45px; background: var(--navy-light); color: white; display: flex; justify-content: center; align-items: center; border-radius: 6px; font-weight: bold; font-size: 0.9rem; }
-.corridor-tag { font-size: 0.85rem; margin-bottom: 0.75rem; color: #64748b; }
-.service-details { font-size: 0.9rem; color: #475569; margin-bottom: 1rem; height: 75px; overflow: hidden; }
-.partner-contact { color: var(--navy-primary); font-weight: 600; text-decoration: none; font-size: 0.95rem; }
-
-/* Footers UI Component styling */
-.main-footer { background: var(--navy-dark); color: #94a3b8; padding: 2rem 0; font-size: 0.85rem; text-align: center; border-top: 2px solid var(--gold-primary); }
-.footer-content a { color: var(--gold-light); text-decoration: none; }
-
-@keyframes pulse {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
-  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+    setTimeout(() => {
+      if (mockTrackingDatabase[codeKey]) {
+        const data = mockTrackingDatabase[codeKey];
+        outputDisplay.innerHTML = `
+          <div class="tracking-card-result success-state">
+            <div class="result-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+              <h4 style="margin:0;">Reference: <span class="highlight-code" style="color:var(--gold-primary); background:#1e293b; padding:0.2rem 0.5rem; border-radius:4px;">${codeKey}</span></h4>
+              <span class="status-pill">${data.status}</span>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar-fill" style="width: ${data.progress}%"></div>
+              <span class="progress-percentage-label">${data.progress}% Complete</span>
+            </div>
+            <div class="tracking-grid-details">
+              <p><strong>Destination:</strong> ${data.client}</p>
+              <p><strong>Current Site:</strong> <span class="text-alert">${data.currentLocation}</span></p>
+              <p><strong>Route Grid:</strong> ${data.route}</p>
+              <p><strong>Updated:</strong> ${data.lastUpdate}</p>
+            </div>
+            <div class="tracking-notes-block">
+              <h5>Official Transit Dispatch Logs:</h5>
+              <p>${data.notes}</p>
+            </div>
+          </div>
+        `;
+      } else {
+        outputDisplay.innerHTML = `
+          <div class="tracking-card-result error-state">
+            <h4>⚠️ Reference Code Not Found</h4>
+            <p>The code <strong>"${codeKey}"</strong> does not match active vehicle manifests.</p>
+            <p style="font-size:0.85rem; margin-top:0.5rem; color:#666;">Coordinate with dispatch teams via WhatsApp (+260 977 882 762) to activate your tracker profile.</p>
+          </div>
+        `;
+      }
+    }, 650);
+  });
 }
 
-/* Responsiveness Layout Tweaks */
-@media(max-width: 768px) {
-  .nav-toggle-btn { display: flex; }
-  .nav-links { display: none; width: 100%; flex-direction: column; gap: 1rem; padding-top: 1rem; }
-  .nav-links.active { display: flex; }
-  .nav-links a { margin: 0; padding: 0.5rem 0; border-bottom: 1px solid #1e293b; }
-  .nav-container { flex-wrap: wrap; }
+function renderVehiclesCatalog() {
+  const targetGrid = document.getElementById('vehicles-grid-target');
+  if (!targetGrid || typeof vehicles === 'undefined') return;
+
+  targetGrid.innerHTML = vehicles.map(car => {
+    const formattedPrice = typeof car.price === 'number' 
+      ? `${car.currency}${car.price.toLocaleString()}` 
+      : car.price;
+
+    return `
+      <article class="car-card">
+        <div class="car-image-placeholder">
+          <span class="car-icon">🚗</span>
+          <span class="image-badge">${car.imagesCount} Photos</span>
+        </div>
+        <div class="car-info">
+          <span class="car-location-badge">${car.location}</span>
+          <h3>${car.title}</h3>
+          <p class="car-price-tag">${formattedPrice}</p>
+          <ul class="car-features-list">
+            ${car.features.slice(0, 4).map(f => `<li>✓ ${f}</li>`).join('')}
+          </ul>
+          <a href="${car.whatsappLink}" target="_blank" class="btn btn-whatsapp">
+            💬 Ask About This Vehicle
+          </a>
+        </div>
+      </article>
+    `;
+  }).join('');
 }

@@ -1,144 +1,102 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SamKen Motors | Quality Vehicles Delivered to Zambia</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <header class="navbar">
-        <div class="container nav-container">
-            <div class="brand">
-                <span class="brand-logo">🚗</span>
-                <span class="brand-name">SamKen Motors</span>
-            </div>
-            <button id="nav-toggle" class="nav-toggle-btn" aria-label="Toggle Navigation Menu">
-                <span></span><span></span><span></span>
-            </button>
-            <nav id="nav-menu" class="nav-links">
-                <a href="#inventory-gallery">Our Vehicles</a>
-                <a href="#tracking-portal">Track Order</a>
-                <a href="#clearing-partners">Logistics Partners</a>
-                <a href="#contact-section">Get In Touch</a>
-            </nav>
-        </div>
-    </header>
+/* Global Brand Stylesheet for SamKen Motors */
+:root {
+  --navy-dark: #0b1329;
+  --navy-primary: #1c2541;
+  --navy-light: #3a506b;
+  --gold-primary: #e5a93b;
+  --gold-light: #f4d35e;
+  --text-dark: #1e293b;
+  --text-light: #f8fafc;
+  --white: #ffffff;
+}
 
-    <main>
-        <!-- Inventory Grid Section -->
-        <section id="inventory-gallery" class="inventory-section">
-            <div class="container">
-                <h2>🚘 Available Vehicles &amp; Fleet Inventory</h2>
-                <p class="section-subtitle">Transparent pricing. Complete documentation. Delivered across Zambia.</p>
-                <div id="vehicles-grid-target" class="vehicles-grid">
-                    <!-- Loaded dynamically via JavaScript renderer -->
-                </div>
-            </div>
-        </section>
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+body { background: #f1f5f9; color: var(--text-dark); line-height: 1.5; }
+.container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
 
-        <!-- Live Marine Traffic & Logistics Tracking Module -->
-        <section id="tracking-portal" class="tracking-section">
-          <div class="container">
-            
-            <div class="tracking-layout-wrapper">
-                <!-- Port Watch Sub-component -->
-                <div class="port-watch-card">
-                  <div class="card-header">
-                    <span class="pulse-indicator"></span>
-                    <h3>Port Watch — Dar es Salaam</h3>
-                    <p class="timestamp">Updated: 23 Oct 2026</p>
-                  </div>
-                  <div class="vessel-list">
-                    
-                    <div class="vessel-item discharging">
-                      <div class="vessel-meta">
-                        <h4>MV Sunrise Ace</h4>
-                        <span class="badge status-green">Offloading Now</span>
-                      </div>
-                      <p>Car carrier (200m) from East London, currently berthed at Berth 1. Discharging motor vehicles. Cars on this vessel are being released to owners as clearing completes.</p>
-                    </div>
+/* Navbar UI Layout */
+.navbar { background: var(--navy-dark); padding: 1rem 0; color: var(--white); position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+.nav-container { display: flex; justify-content: space-between; align-items: center; }
+.brand { display: flex; align-items: center; gap: 0.5rem; font-size: 1.25rem; font-weight: bold; color: var(--gold-light); }
+.nav-links a { color: var(--text-light); text-decoration: none; margin-left: 1.5rem; font-size: 0.95rem; font-weight: 500; transition: color 0.2s; }
+.nav-links a:hover { color: var(--gold-primary); }
+.nav-toggle-btn { display: none; background: none; border: none; flex-direction: column; gap: 4px; cursor: pointer; }
+.nav-toggle-btn span { width: 24px; height: 3px; background: white; border-radius: 2px; }
 
-                    <div class="vessel-item queued">
-                      <div class="vessel-meta">
-                        <h4>MV Freedom Ace</h4>
-                        <span class="badge status-amber">Docked &amp; Next in Line</span>
-                      </div>
-                      <p>Car carrier (200m) arrived at Dar es Salaam port. Lined up and waiting for a free berth to initiate discharging. Clearing teams are prepped and standby.</p>
-                    </div>
-                    
-                  </div>
-                  <p class="disclaimer"><small>Vessel configurations sourced via Tanzania Ports Authority schedules. Times are dynamic to shifting port traffic congestion.</small></p>
-                </div>
+/* Core Layout Grids */
+section { padding: 4rem 0; }
+h2 { font-size: 2rem; color: var(--navy-dark); margin-bottom: 0.5rem; text-align: center; }
+.section-subtitle { text-align: center; color: #64748b; margin-bottom: 3rem; font-size: 1.1rem; }
 
-                <!-- Interactive Track My Vehicle Engine Interface -->
-                <div class="tracker-card">
-                  <h3>📍 Track My Vehicle Order</h3>
-                  <p>Enter your unique reference tracking code below to trace real-time transit positions.</p>
-                  <form id="vessel-tracker-form" class="tracker-form" onsubmit="event.preventDefault();">
-                    <div class="input-group">
-                      <input type="text" id="tracking-ref-code" placeholder="e.g., DEMO-001" required>
-                      <button type="submit" class="btn btn-primary">Track Shipment</button>
-                    </div>
-                  </form>
-                  <div id="tracking-results-output" class="tracking-output-display"></div>
-                </div>
-            </div>
+/* Inventory Grid Module Layout */
+.vehicles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; }
+.car-card { background: var(--white); border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); display: flex; flex-direction: column; transition: transform 0.2s; }
+.car-card:hover { transform: translateY(-4px); }
+.car-image-placeholder { height: 180px; background: #cbd5e1; display: flex; justify-content: center; align-items: center; position: relative; font-size: 3rem; }
+.image-badge { position: absolute; bottom: 8px; right: 8px; background: rgba(15, 23, 42, 0.75); color: white; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; }
+.car-info { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
+.car-location-badge { font-size: 0.75rem; text-transform: uppercase; background: #e2e8f0; color: #475569; padding: 0.1rem 0.4rem; border-radius: 4px; width: max-content; margin-bottom: 0.5rem; }
+.car-price-tag { font-size: 1.4rem; font-weight: bold; color: var(--navy-primary); margin: 0.5rem 0 1rem 0; }
+.car-features-list { list-style: none; margin-bottom: 1.5rem; flex-grow: 1; }
+.car-features-list li { font-size: 0.85rem; color: #475569; margin-bottom: 0.25rem; }
 
-          </div>
-        </section>
+/* Tracking Grid UI Layer blocks */
+.tracking-layout-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-top: 1rem; }
+.port-watch-card, .tracker-card { background: var(--white); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+.card-header { position: relative; padding-bottom: 1rem; border-bottom: 1px solid #e2e8f0; margin-bottom: 1.5rem; }
+.pulse-indicator { width: 10px; height: 10px; background: #22c55e; border-radius: 50%; display: inline-block; position: absolute; right: 0; top: 5px; box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); animation: pulse 1.8s infinite; }
+.vessel-item { padding: 1rem 0; border-bottom: 1px dashed #e2e8f0; }
+.vessel-item:last-child { border-bottom: none; }
+.vessel-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+.badge { font-size: 0.7rem; font-weight: bold; padding: 0.15rem 0.4rem; border-radius: 4px; }
+.status-green { background: #dcfce7; color: #166534; }
+.status-amber { background: #fef9c3; color: #854d0e; }
 
-        <!-- Regional Logistics and Border Clearing Partners Grid -->
-        <section id="clearing-partners" class="partners-section">
-          <div class="container">
-            <h2>🤝 Our Vetted Clearing &amp; Logistics Partners</h2>
-            <p class="section-subtitle">Licensed processing agencies managing customs documentation and legal clearance tracking at every cross-border corridor.</p>
-            
-            <div class="partners-grid">
-              
-              <article class="partner-card">
-                <div class="partner-branding">
-                  <div class="fallback-logo">GL</div>
-                  <h3>Gwaliz Logistics Limited</h3>
-                </div>
-                <p class="corridor-tag">Customs Clearing &amp; Forwarding — <strong>Nakonde Border, Zambia</strong></p>
-                <p class="service-details">Manages customs registration workflows, complete import/export clearances, overland transit freight arrangements, and secure door-to-door handovers.</p>
-                <a href="tel:+260971104814" class="partner-contact">📞 +260 971 104 814</a>
-              </article>
+/* Interactive Input Elements Elements */
+.input-group { display: flex; gap: 0.5rem; margin-top: 1rem; }
+.input-group input { flex-grow: 1; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 1rem; }
+.btn { display: inline-block; padding: 0.75rem 1rem; font-weight: 600; text-align: center; border-radius: 4px; text-decoration: none; cursor: pointer; border: none; font-size: 0.95rem; }
+.btn-primary { background: var(--navy-primary); color: white; transition: background 0.2s; }
+.btn-primary:hover { background: var(--navy-dark); }
+.btn-whatsapp { background: #25d366; color: white; margin-top: auto; }
+.btn-whatsapp:hover { background: #20ba5a; }
 
-              <article class="partner-card">
-                <div class="partner-branding">
-                  <div class="fallback-logo">WL</div>
-                  <h3>Wisdom Logistics</h3>
-                </div>
-                <p class="corridor-tag">Clearing &amp; Forwarding Agency — <strong>Dar es Salaam, Tanzania</strong></p>
-                <p class="service-details">“We deliver in time more than expected.” Oversees port container handling, offloading checks, and local manifest declarations under managing directorship and logistics oversight.</p>
-                <a href="tel:+255784780350" class="partner-contact">📞 +255 784 780 350</a>
-              </article>
+/* Tracking Output Processing Visualization */
+.tracking-output-display { display: none; margin-top: 1.5rem; padding: 1.25rem; border-radius: 6px; background: #f8fafc; border: 1px solid #e2e8f0; }
+.status-pill { padding: 0.25rem 0.6rem; border-radius: 99px; font-size: 0.8rem; font-weight: bold; background: #e0f2fe; color: #0369a1; }
+.progress-bar-container { background: #e2e8f0; border-radius: 99px; height: 16px; position: relative; margin: 1.5rem 0; overflow: hidden; }
+.progress-bar-fill { background: var(--gold-primary); height: 100%; transition: width 0.5s ease-out; }
+.progress-percentage-label { position: absolute; inset: 0; text-align: center; font-size: 0.75rem; line-height: 16px; color: #000; font-weight: 600; }
+.tracking-grid-details p { font-size: 0.9rem; margin-bottom: 0.4rem; color: #475569; }
+.tracking-notes-block { background: #fff; padding: 1rem; border-left: 4px solid var(--navy-primary); border-radius: 4px; margin-top: 1rem; }
+.tracking-notes-block h5 { margin-bottom: 0.25rem; font-size: 0.85rem; color: var(--navy-dark); }
+.error-state { border-left: 4px solid #ef4444; background: #fef2f2; padding: 1rem; }
+.text-alert { color: #b45309; font-weight: 600; }
 
-              <article class="partner-card">
-                <div class="partner-branding">
-                  <div class="fallback-logo">BI</div>
-                  <h3>Buildon Investments Limited</h3>
-                </div>
-                <p class="corridor-tag">Clearing &amp; Forwarding — <strong>Kazungula Border, Zambia</strong></p>
-                <p class="service-details">Specialized cross-border customs declarations, freight routing logistics solutions, and processing systems out of Livingstone handling South Africa and Tanzania links.</p>
-                <a href="tel:+260977450712" class="partner-contact">📞 +260 977 450 712</a>
-              </article>
+/* Logistics Grid Layout rules */
+.partners-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+.partner-card { background: var(--white); padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+.partner-branding { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+.fallback-logo { width: 45px; height: 45px; background: var(--navy-light); color: white; display: flex; justify-content: center; align-items: center; border-radius: 6px; font-weight: bold; font-size: 1rem; }
+.corridor-tag { font-size: 0.85rem; margin-bottom: 0.75rem; color: #64748b; }
+.service-details { font-size: 0.9rem; color: #475569; margin-bottom: 1rem; height: 75px; overflow: hidden; }
+.partner-contact { color: var(--navy-primary); font-weight: 600; text-decoration: none; font-size: 0.95rem; }
 
-            </div>
-          </div>
-        </section>
-    </main>
+/* Footers UI Component styling */
+.main-footer { background: var(--navy-dark); color: #94a3b8; padding: 2rem 0; font-size: 0.85rem; text-align: center; border-top: 2px solid var(--gold-primary); }
+.footer-content a { color: var(--gold-light); text-decoration: none; }
 
-    <footer id="contact-section" class="main-footer">
-        <div class="container footer-content">
-            <p>&copy; 2026 SamKen Motors. Kansenshi, Ndola · Monze · Lusaka, Zambia.</p>
-            <p>WhatsApp Inquiries: <a href="https://wa.me/260977882762">+260 977 882 762</a> | <a href="https://wa.me/260977863898">+260 977 863 898</a></p>
-        </div>
-    </footer>
+@keyframes pulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
 
-    <script src="vehicles.js"></script>
-    <script src="script.js"></script>
-</body>
-</html>
+/* Responsiveness Layout Tweaks */
+@media(max-width: 768px) {
+  .nav-toggle-btn { display: flex; }
+  .nav-links { display: none; width: 100%; flex-direction: column; gap: 1rem; padding-top: 1rem; }
+  .nav-links.active { display: flex; }
+  .nav-links a { margin: 0; padding: 0.5rem 0; border-bottom: 1px solid #1e293b; }
+  .nav-container { flex-wrap: wrap; }
+}
