@@ -157,8 +157,8 @@ function renderVehiclesCatalog() {
 const deliveredVehicles = [
   {
     title: 'Toyota Mark X',
-    folder: 'delivered-toyota-mark-x-kawambwa',
-    count: 3,
+    folder: 'delivered-toyota-mark-x-valentine',
+    count: 4,
     note: 'Delivered to a happy customer, Mr. Valentine, in Kawambwa &mdash; about 1,600 km by road from Dar es Salaam.'
   },
   { title: 'Mazda Demio', folder: 'delivered-mazda-demio-choma', count: 5, note: 'Delivered to a customer in Choma.' },
@@ -207,9 +207,9 @@ async function renderPortWatch() {
     const ships = await res.json();
     if (!Array.isArray(ships) || !ships.length) throw new Error('empty');
     target.innerHTML = ships.map((ship) => {
-      const tone = ship.status === 'offloading' ? 'status-green' : 'status-amber';
+      const tone = ship.status === 'offloading' ? 'status-green' : (ship.status === 'waiting' ? 'status-amber' : 'status-blue');
       const extras = [
-        ship.departed ? `Departed: ${formatShortDate(ship.departed)}` : '',
+        ship.arrived ? `Arrived: ${formatShortDate(ship.arrived)}` : '',
         ship.eta ? `ETA: ${formatShortDate(ship.eta)}` : '',
         ship.vehicles ? `${escapeHtml(ship.vehicles)} vehicles` : ''
       ].filter(Boolean).join(' &middot; ');

@@ -599,6 +599,11 @@ img {
   color: #92400e;
 }
 
+.status-blue {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
 .vessel-item p,
 .tracker-card p,
 .disclaimer,
