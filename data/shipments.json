@@ -1,12 +1,83 @@
 [
   {
-    "vessel": "MV Passama",
+    "vessel": "Grande Egitto",
+    "route": "Dar es Salaam, Tanzania → Zambia",
+    "origin": "tanzania",
+    "status": "waiting",
+    "statusLabel": "Arrived — Waiting for offloading",
+    "arrived": "2026-10-22",
+    "eta": null
+  },
+  {
+    "vessel": "Freedom Ace",
     "route": "Dar es Salaam, Tanzania → Zambia",
     "origin": "tanzania",
     "status": "offloading",
-    "statusLabel": "Docked — Offloading",
-    "departed": null,
-    "eta": null,
-    "vehicles": null
+    "statusLabel": "Offloading now",
+    "arrived": "2026-10-22",
+    "eta": null
+  },
+  {
+    "vessel": "Emerald Ace",
+    "route": "Dar es Salaam, Tanzania → Zambia",
+    "origin": "tanzania",
+    "status": "enroute",
+    "statusLabel": "En route",
+    "arrived": null,
+    "eta": "2026-10-26"
+  },
+  {
+    "vessel": "Astral Ace T/S Emerald Ace",
+    "route": "Dar es Salaam, Tanzania → Zambia",
+    "origin": "tanzania",
+    "status": "enroute",
+    "statusLabel": "En route",
+    "arrived": null,
+    "eta": "2026-10-26"
+  },
+  {
+    "vessel": "Morning Cindy",
+    "route": "Dar es Salaam, Tanzania → Zambia",
+    "origin": "tanzania",
+    "status": "enroute",
+    "statusLabel": "En route",
+    "arrived": null,
+    "eta": "2026-10-28"
+  },
+  {
+    "vessel": "Cattleya Ace",
+    "route": "Dar es Salaam, Tanzania → Zambia",
+    "origin": "tanzania",
+    "status": "enroute",
+    "statusLabel": "En route",
+    "arrived": null,
+    "eta": "2026-10-28"
+  },
+  {
+    "vessel": "Pluto Leader",
+    "route": "Dar es Salaam, Tanzania → Zambia",
+    "origin": "tanzania",
+    "status": "enroute",
+    "statusLabel": "En route",
+    "arrived": null,
+    "eta": "2026-10-30"
+  },
+  {
+    "vessel": "Dover Highway",
+    "route": "Dar es Salaam, Tanzania → Zambia",
+    "origin": "tanzania",
+    "status": "enroute",
+    "statusLabel": "En route",
+    "arrived": null,
+    "eta": "2026-11-10"
+  },
+  {
+    "vessel": "Grand Quest",
+    "route": "Dar es Salaam, Tanzania → Zambia",
+    "origin": "tanzania",
+    "status": "enroute",
+    "statusLabel": "En route",
+    "arrived": null,
+    "eta": "2026-11-13"
   }
 ]
