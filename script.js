@@ -156,9 +156,15 @@ function renderVehiclesCatalog() {
 
 const deliveredVehicles = [
   {
+    title: 'Honda Vezel',
+    folder: 'delivered-honda-vezel-ndola',
+    count: 4,
+    note: 'Madam Mary&rsquo;s Honda Vezel, delivered safely to Ndola &mdash; about 1,750 km by road from Dar es Salaam. Want the same smooth handover? We can also register your car for you: <strong>white book and number plates included</strong>.'
+  },
+  {
     title: 'Toyota Mark X',
     folder: 'delivered-toyota-mark-x-valentine',
-    count: 4,
+    count: 3,
     note: 'Delivered to a happy customer, Mr. Valentine, in Kawambwa &mdash; about 1,600 km by road from Dar es Salaam.'
   },
   { title: 'Mazda Demio', folder: 'delivered-mazda-demio-choma', count: 5, note: 'Delivered to a customer in Choma.' },
