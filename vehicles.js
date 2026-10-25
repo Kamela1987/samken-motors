@@ -64,6 +64,39 @@ const vehicles = [
     whatsappLink: "https://wa.me/260977882762?text=Hi,%20I'm%20interested%20in%20the%20Red%20Honda%20Fit%20in%20Lusaka"
   },
   {
+    id: "toyota-vanguard-automatic",
+    title: "Toyota Vanguard (Automatic)",
+    price: 200000,
+    currency: "K",
+    fuel: "Petrol",
+    color: "Pearl White",
+    status: "Available",
+    location: "Zambia",
+    imagesCount: 7,
+    photo: "images/toyota-vanguard-1.jpg",
+    photos: [
+      "images/toyota-vanguard-1.jpg",
+      "images/toyota-vanguard-2.jpg",
+      "images/toyota-vanguard-3.jpg",
+      "images/toyota-vanguard-4.jpg",
+      "images/toyota-vanguard-5.jpg",
+      "images/toyota-vanguard-6.jpg",
+      "images/toyota-vanguard-7.jpg"
+    ],
+    features: [
+      "Automatic transmission, right-hand drive",
+      "Clean pearl-white body with tinted windows and door visors",
+      "Alloy wheels fitted with rugged tyres",
+      "Rear roof spoiler for a sporty SUV look",
+      "Large touchscreen music system on the dashboard",
+      "Quilted leather-style seat covers and steering wheel cover",
+      "Spacious boot with a cargo cover, ideal for family trips and luggage",
+      "Zambia-registered, ready for the road",
+      "Viewing available: come and see it, test it, and drive it"
+    ],
+    whatsappLink: "https://wa.me/260977882762?text=Hi,%20I'm%20interested%20in%20the%20White%20Toyota%20Vanguard%20(K200,000)"
+  },
+  {
     id: "volvo-fl-dropside",
     title: "Volvo FL Dropside Truck (Available to Order)",
     price: "Price on request",
