@@ -1041,3 +1041,23 @@ img.img-broken { visibility:hidden; }
 .partner-logo-round { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; box-shadow: 0 4px 14px rgba(15,23,42,.15); }
 .partner-logo-card { width: 100%; height: 100%; max-width: 100%; max-height: 100%; object-fit: contain; padding: 6px; background: #fff; }
 .partner-media { background: #fff; }
+
+/* ===== Batch 1 upgrade: cards, ribbons, filters, sticky WhatsApp ===== */
+.car-card { border-radius: 20px; overflow: hidden; box-shadow: 0 14px 40px rgba(11,19,41,.10); transition: transform .25s ease, box-shadow .25s ease; scroll-margin-top: 90px; }
+.car-card:hover { transform: translateY(-4px); box-shadow: 0 22px 50px rgba(11,19,41,.18); }
+.car-card[hidden] { display: none; }
+.car-image-frame, .car-image-placeholder { position: relative; }
+.car-price-tag { display: inline-block; background: linear-gradient(135deg, #e5a93b, #f4d35e); color: #0b1329; font-weight: 800; padding: .3rem .9rem; border-radius: 999px; }
+.car-ribbon { position: absolute; top: 12px; left: 12px; z-index: 3; background: #0b1329; color: #f4d35e; font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: .35rem .8rem; border-radius: 999px; box-shadow: 0 6px 16px rgba(0,0,0,.3); }
+.car-card.is-sold img { filter: grayscale(1) brightness(.8); }
+.car-card.is-sold .car-ribbon { background: #b91c1c; color: #fff; }
+.btn-share { display: block; width: 100%; margin-top: .6rem; background: transparent; color: #1c2541; border: 2px solid #1c2541; border-radius: 12px; padding: .65rem 1rem; font-weight: 700; cursor: pointer; }
+.btn-share:hover { background: #1c2541; color: #fff; }
+.filter-bar { display: flex; gap: .6rem; overflow-x: auto; padding: .2rem 0 1.4rem; scrollbar-width: none; }
+.filter-bar::-webkit-scrollbar { display: none; }
+.chip { flex: 0 0 auto; border: 2px solid #d5dbe8; background: #fff; color: #1c2541; border-radius: 999px; padding: .5rem 1.1rem; font-weight: 700; cursor: pointer; }
+.chip.active { background: #0b1329; border-color: #0b1329; color: #f4d35e; }
+.trust-grid strong { color: #e5a93b; }
+.wa-sticky { position: fixed; right: 16px; bottom: 16px; z-index: 999; background: #25d366; color: #fff; font-weight: 800; text-decoration: none; padding: .85rem 1.3rem; border-radius: 999px; box-shadow: 0 10px 28px rgba(0,0,0,.35); }
+.main-footer { padding-bottom: 5rem; }
+@media (max-width: 640px) { .wa-sticky { left: 12px; right: 12px; bottom: 12px; text-align: center; } }

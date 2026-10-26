@@ -65,6 +65,7 @@ const vehicles = [
   },
   {
     id: "toyota-vanguard-automatic",
+    tag: "New listing",
     title: "Toyota Vanguard (Automatic)",
     price: 200000,
     currency: "K",
@@ -98,6 +99,7 @@ const vehicles = [
   },
   {
     id: "nissan-juke-automatic",
+    tag: "New listing",
     title: "Nissan Juke (Automatic)",
     price: 120000,
     currency: "K",
