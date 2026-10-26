@@ -72,7 +72,7 @@ const vehicles = [
     fuel: "Petrol",
     color: "Pearl White",
     status: "Available",
-    location: "Zambia",
+    location: "Lusaka",
     imagesCount: 7,
     photo: "images/toyota-vanguard-1.jpg",
     photos: [
@@ -106,7 +106,7 @@ const vehicles = [
     fuel: "Petrol",
     color: "Red",
     status: "Available",
-    location: "Zambia",
+    location: "Lusaka",
     imagesCount: 8,
     photo: "images/nissan-juke-1.jpg",
     photos: [
