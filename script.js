@@ -213,7 +213,7 @@ async function renderPortWatch() {
     const ships = await res.json();
     if (!Array.isArray(ships) || !ships.length) throw new Error('empty');
     target.innerHTML = ships.map((ship) => {
-      const tone = ship.status === 'offloading' ? 'status-green' : (ship.status === 'waiting' ? 'status-amber' : 'status-blue');
+      const tone = ['offloading', 'offloaded'].includes(ship.status) ? 'status-green' : (ship.status === 'waiting' ? 'status-amber' : 'status-blue');
       const extras = [
         ship.arrived ? `Arrived: ${formatShortDate(ship.arrived)}` : '',
         ship.eta ? `ETA: ${formatShortDate(ship.eta)}` : '',
