@@ -1061,3 +1061,5 @@ img.img-broken { visibility:hidden; }
 .wa-sticky { position: fixed; right: 16px; bottom: 16px; z-index: 999; background: #25d366; color: #fff; font-weight: 800; text-decoration: none; padding: .85rem 1.3rem; border-radius: 999px; box-shadow: 0 10px 28px rgba(0,0,0,.35); }
 .main-footer { padding-bottom: 5rem; }
 @media (max-width: 640px) { .wa-sticky { left: 12px; right: 12px; bottom: 12px; text-align: center; } }
+
+.ground-figure--wide img { aspect-ratio: 4 / 3; object-position: center; }
