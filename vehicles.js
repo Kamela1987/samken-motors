@@ -97,6 +97,40 @@ const vehicles = [
     whatsappLink: "https://wa.me/260977882762?text=Hi,%20I'm%20interested%20in%20the%20White%20Toyota%20Vanguard%20(K200,000)"
   },
   {
+    id: "nissan-juke-automatic",
+    title: "Nissan Juke (Automatic)",
+    price: 120000,
+    currency: "K",
+    fuel: "Petrol",
+    color: "Red",
+    status: "Available",
+    location: "Zambia",
+    imagesCount: 8,
+    photo: "images/nissan-juke-1.jpg",
+    photos: [
+      "images/nissan-juke-1.jpg",
+      "images/nissan-juke-2.jpg",
+      "images/nissan-juke-3.jpg",
+      "images/nissan-juke-4.jpg",
+      "images/nissan-juke-5.jpg",
+      "images/nissan-juke-6.jpg",
+      "images/nissan-juke-7.jpg",
+      "images/nissan-juke-8.jpg"
+    ],
+    features: [
+      "Automatic transmission, right-hand drive",
+      "Eye-catching red body in a bold, sporty crossover shape",
+      "Stylish alloy wheels",
+      "Touchscreen music and display system on the dashboard",
+      "Sport-style seats with red accents and matching red centre console",
+      "Comfortable rear seat with cup holders",
+      "Compact and easy to park, ideal for town driving and daily use",
+      "Zambia-registered, ready for the road",
+      "Viewing available: come and see it, test it, and drive it"
+    ],
+    whatsappLink: "https://wa.me/260977882762?text=Hi,%20I'm%20interested%20in%20the%20Red%20Nissan%20Juke%20(K120,000)"
+  },
+  {
     id: "volvo-fl-dropside",
     title: "Volvo FL Dropside Truck (Available to Order)",
     price: "Price on request",
