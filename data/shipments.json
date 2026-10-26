@@ -3,8 +3,8 @@
     "vessel": "Grande Egitto",
     "route": "Dar es Salaam, Tanzania → Zambia",
     "origin": "tanzania",
-    "status": "waiting",
-    "statusLabel": "Arrived — Waiting for offloading",
+    "status": "offloading",
+    "statusLabel": "Offloading started",
     "arrived": "2026-10-22",
     "eta": null
   },
@@ -12,8 +12,8 @@
     "vessel": "Freedom Ace",
     "route": "Dar es Salaam, Tanzania → Zambia",
     "origin": "tanzania",
-    "status": "offloading",
-    "statusLabel": "Offloading now",
+    "status": "offloaded",
+    "statusLabel": "Offloading complete",
     "arrived": "2026-10-22",
     "eta": null
   },
